@@ -100,7 +100,7 @@
             currentIdentity = availableIdentities[Math.floor(Math.random() * availableIdentities.length)];
             assignedIdentities.add(currentIdentity.name);
 
-            identityDisplay.innerHTML = `Assigned Identity:<br>Name: ${currentIdentity.name}<br>Email: ${currentIdentity.email} <button onclick="openInbox('${currentIdentity.email}')">View Inbox</button><br>Address: ${currentIdentity.address}<br>Online Accounts:<br>- ${currentIdentity.accounts.join("<br>- ")}`;
+            identityDisplay.innerHTML = `Assigned Identity:<br>Name: ${currentIdentity.name}<br>Email: ${currentIdentity.email} <button onclick="openInbox('${currentIdentity.email}')">View Inbox</button><br>Address: ${currentIdentity.address}<br><br>Online Accounts:<br>- ${currentIdentity.accounts.join("<br>- ")}`;
             unassignButton.disabled = false;
         });
 
