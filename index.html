@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fake Identity Assigner</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            margin: 10px;
+            cursor: pointer;
+        }
+        #identity {
+            margin-top: 20px;
+            font-size: 20px;
+            font-weight: bold;
+            white-space: pre-wrap;
+            text-align: left;
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <h1>Fake Identity Assigner</h1>
+    <button id="assignButton">Assign Identity</button>
+    <button id="unassignButton" disabled>Unassign Identity</button>
+    <div id="identity">No identity assigned</div>
+
+    <script>
+        const identities = [
+            {
+                name: "John Doe",
+                email: "johndoe@example.com",
+                address: "123 Elm Street, Springfield, USA",
+                accounts: ["Twitter: @JohnDoe", "GitHub: johndoe"]
+            },
+            {
+                name: "Jane Smith",
+                email: "janesmith@example.com",
+                address: "456 Oak Avenue, Metropolis, USA",
+                accounts: ["Instagram: @JaneSmith", "LinkedIn: jane-smith"]
+            },
+            {
+                name: "Max Powers",
+                email: "maxpowers@example.com",
+                address: "789 Pine Lane, Gotham, USA",
+                accounts: ["YouTube: MaxPowers", "Twitch: MaxP"]
+            },
+            {
+                name: "Emily Clark",
+                email: "emilyclark@example.com",
+                address: "321 Maple Drive, Star City, USA",
+                accounts: ["Reddit: u/EmilyClark", "Discord: EmilyC#1234"]
+            },
+            {
+                name: "Sam Wilson",
+                email: "samwilson@example.com",
+                address: "654 Birch Road, Central City, USA",
+                accounts: ["Facebook: SamWilson", "Pinterest: SamW"]
+            },
+            {
+                name: "Alex Taylor",
+                email: "alextaylor@example.com",
+                address: "987 Cedar Court, Coast City, USA",
+                accounts: ["Snapchat: AlexT", "Medium: AlexTaylor"]
+            }
+        ];
+
+        let assignedIdentities = new Set();
+        let currentIdentity = null;
+
+        const assignButton = document.getElementById('assignButton');
+        const unassignButton = document.getElementById('unassignButton');
+        const identityDisplay = document.getElementById('identity');
+
+        assignButton.addEventListener('click', () => {
+            if (currentIdentity) {
+                alert("You already have an assigned identity. Please unassign it first.");
+                return;
+            }
+
+            const availableIdentities = identities.filter(id => !assignedIdentities.has(id.name));
+
+            if (availableIdentities.length === 0) {
+                alert("No more identities available.");
+                return;
+            }
+
+            currentIdentity = availableIdentities[Math.floor(Math.random() * availableIdentities.length)];
+            assignedIdentities.add(currentIdentity.name);
+
+            identityDisplay.innerHTML = `Assigned Identity:<br>Name: ${currentIdentity.name}<br>Email: ${currentIdentity.email} <button onclick="openInbox('${currentIdentity.email}')">View Inbox</button><br>Address: ${currentIdentity.address}<br>Online Accounts:<br>- ${currentIdentity.accounts.join("<br>- ")}`;
+            unassignButton.disabled = false;
+        });
+
+        unassignButton.addEventListener('click', () => {
+            if (!currentIdentity) {
+                alert("No identity to unassign.");
+                return;
+            }
+
+            assignedIdentities.delete(currentIdentity.name);
+            identityDisplay.textContent = "No identity assigned";
+            currentIdentity = null;
+            unassignButton.disabled = true;
+        });
+
+        function openInbox(email) {
+            alert(`This feature would open the inbox for ${email}. Integrate with Gmail or Outlook APIs here.`);
+            // Here, you can implement the integration with Gmail or Outlook APIs.
+            // For example, redirect to OAuth authentication and then fetch emails.
+        }
+    </script>
+</body>
+</html>
